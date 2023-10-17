@@ -18,6 +18,7 @@
     "coverage": "jest --coverage",
     "clearCache": "jest --clearCache",
     "prepublish": "tsc",
+    "third-party-updates": "oss third-party manifest --includeOptDeps && oss third-party notices --includeOptDeps && git add THIRD_PARTY_NOTICES.md third_party_manifest.json",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "keywords": [],
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
+    "@newrelic/newrelic-oss-cli": "^0.1.2",
     "@types/async-retry": "^1.4.6",
     "@types/node": "^20.5.9",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
