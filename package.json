@@ -50,6 +50,7 @@
     "typescript": "^5.2.2"
   },
   "files": [
+    "THIRD_PARTY_NOTICES.md",
     "dist",
     "!dist/**/__tests__/**"
   ]
