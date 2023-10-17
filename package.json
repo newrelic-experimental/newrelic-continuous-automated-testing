@@ -17,6 +17,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "clearCache": "jest --clearCache",
+    "prepublish": "tsc",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "keywords": [],
@@ -45,5 +46,9 @@
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
-  }
+  },
+  "files": [
+    "dist",
+    "!dist/**/__tests__/**"
+  ]
 }
