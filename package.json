@@ -1,6 +1,6 @@
 {
-  "name": "@newrelic/newrelic-continuous-automated-testing",
-  "version": "0.0.1",
+  "name": "@newrelic/continuous-automated-testing",
+  "version": "0.1.0",
   "description": "CLI and library package for running New Relic Synthetic tests in CICD pipelines",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
