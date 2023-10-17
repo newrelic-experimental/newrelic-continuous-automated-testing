@@ -17,7 +17,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "clearCache": "jest --clearCache",
-    "prepublish": "tsc",
+    "prepublishOnly": "tsc",
     "third-party-updates": "oss third-party manifest --includeOptDeps && oss third-party notices --includeOptDeps && git add THIRD_PARTY_NOTICES.md third_party_manifest.json",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
