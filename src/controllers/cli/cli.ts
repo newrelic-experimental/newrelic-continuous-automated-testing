@@ -4,8 +4,8 @@ import { runTestsCommand } from "./commands/run-tests";
 
 const program = new Command();
 program
-  .name("synthetics-ci")
-  .version("1.0.0")
+  .name("newrelic-cat")
+  .version("0.1.0")
   .description("CLI for running New Relic Synthetics tests in CICD Pipelines");
 
 program.addCommand(runTestsCommand);
