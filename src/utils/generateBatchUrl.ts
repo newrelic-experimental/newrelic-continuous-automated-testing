@@ -4,7 +4,7 @@ const STAGING_HOST = "https://staging-one.newrelic.com";
 const PRD_US_HOST = "https://one.newrelic.com";
 const PRD_EU_HOST = "https://one.eu.newrelic.com";
 
-const NERDGRAPH_URL_BY_REGION = new Map<string, string>([
+export const NERDGRAPH_URL_BY_REGION = new Map<string, string>([
   ["STAGING", STAGING_HOST],
   ["US", PRD_US_HOST],
   ["EU", PRD_EU_HOST],
