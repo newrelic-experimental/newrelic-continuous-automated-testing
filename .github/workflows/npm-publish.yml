@@ -26,6 +26,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://registry.npmjs.org'
+    - name: Install dependencies
+      run: npm ci
+    - name: Build module
+      run: npm run build
+    - name: Test module
+      run: npm run test
     - name: Setup GitHub Credentials
       run: |
         git config user.name $GITHUB_ACTOR
