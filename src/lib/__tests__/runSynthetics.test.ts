@@ -9,7 +9,7 @@ import {
 } from "../interfaces";
 import NerdGraphService from "../../services/nerdgraph/nerdGraphService";
 import { afterEach } from "node:test";
-import * as gatherMetadata from "../../utils/gatherMetadata";
+import { NERDGRAPH_URL_BY_REGION } from "../../utils";
 jest.useFakeTimers();
 jest.mock("../../services/nerdgraph/nerdGraphService");
 jest.mock("../../utils/gatherMetadata");
@@ -28,7 +28,7 @@ describe("The runSynthetics function", () => {
     apiKey: "NR-apiKey-123",
     accountId: 1234,
     verbose: true,
-    region: "US",
+    region: "STAGING",
     tests: [
       {
         monitorGUID: "monitor-guid-123",
@@ -36,10 +36,6 @@ describe("The runSynthetics function", () => {
     ],
     config: mockConfigInput,
   };
-
-  //   const addMetadataToConfigSpy = jest
-  //     .spyOn(gatherMetadata, "addMetadataToConfig")
-  //     .mockResolvedValue(mockConfig);
 
   const pollAutomatedTestResultsSpy = jest.spyOn(
     NerdGraphService.prototype,
@@ -56,6 +52,17 @@ describe("The runSynthetics function", () => {
     jest.runAllTimersAsync();
     await expect(runSyntheticsPromise).rejects.toThrow();
     expect(startAutomatedTestsSpy).toBeCalledTimes(6);
+  });
+
+  it("should catch and log an error that was thrown when no batch id was returned", async () => {
+    const startAutomatedTestsSpy = jest.spyOn(
+      NerdGraphService.prototype,
+      "startAutomatedTests",
+    );
+    startAutomatedTestsSpy.mockResolvedValue("");
+    const runSyntheticsPromise = runTestBatch(apiKey, mockConfig);
+    jest.runAllTimersAsync();
+    await expect(runSyntheticsPromise).rejects.toThrow();
   });
 
   it("should start the tests, then return the results when result is PASSED", async () => {
@@ -83,6 +90,16 @@ describe("The runSynthetics function", () => {
     );
     expect(result?.status).toBe(TestResultStatuses.PASSED);
     expect(result?.tests.length).toBe(1);
+    expect(result?.batchId).toBe(mockBatchId);
+    expect(result?.batchUrl).toContain(
+      NERDGRAPH_URL_BY_REGION.get(mockConfig.region),
+    );
+    expect(result?.batchUrl).toContain(
+      await generateExpectedBatchUrlPaneValue(
+        mockConfig.accountId,
+        mockBatchId,
+      ),
+    );
   });
 
   it("should start the tests, then return the results when result is FAILURE", async () => {
@@ -110,6 +127,16 @@ describe("The runSynthetics function", () => {
     );
     expect(result?.status).toBe("FAILURE");
     expect(result?.tests.length).toBe(3);
+    expect(result?.batchId).toBe(mockBatchId);
+    expect(result?.batchUrl).toContain(
+      NERDGRAPH_URL_BY_REGION.get(mockConfig.region),
+    );
+    expect(result?.batchUrl).toContain(
+      await generateExpectedBatchUrlPaneValue(
+        mockConfig.accountId,
+        mockBatchId,
+      ),
+    );
   });
 
   it("should add metadata config based on the environment before starting tests", async () => {
@@ -137,6 +164,16 @@ describe("The runSynthetics function", () => {
     );
     expect(result?.status).toBe("FAILURE");
     expect(result?.tests.length).toBe(3);
+    expect(result?.batchId).toBe(mockBatchId);
+    expect(result?.batchUrl).toContain(
+      NERDGRAPH_URL_BY_REGION.get(mockConfig.region),
+    );
+    expect(result?.batchUrl).toContain(
+      await generateExpectedBatchUrlPaneValue(
+        mockConfig.accountId,
+        mockBatchId,
+      ),
+    );
   });
 
   it("should return all results when verbose logging is not present in the config file", async () => {
@@ -167,6 +204,16 @@ describe("The runSynthetics function", () => {
     );
     expect(result?.status).toBe("FAILURE");
     expect(result?.tests.length).toBe(3);
+    expect(result?.batchId).toBe(mockBatchId);
+    expect(result?.batchUrl).toContain(
+      NERDGRAPH_URL_BY_REGION.get(mockConfig.region),
+    );
+    expect(result?.batchUrl).toContain(
+      await generateExpectedBatchUrlPaneValue(
+        mockConfig.accountId,
+        mockBatchId,
+      ),
+    );
   });
 });
 
@@ -224,3 +271,16 @@ const mockTestResultsFailure: TestResult = {
     },
   ],
 };
+
+async function generateExpectedBatchUrlPaneValue(
+  accountId: number,
+  batchId: string,
+): Promise<string> {
+  return btoa(
+    JSON.stringify({
+      nerdletId: "automated-testing.batch-detail-list",
+      accountId: accountId,
+      batchId: mockBatchId,
+    }),
+  );
+}

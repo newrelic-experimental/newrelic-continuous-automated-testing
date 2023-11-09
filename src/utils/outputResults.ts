@@ -14,7 +14,9 @@ export async function outputResults(
 ) {
   if (testResults.status === TestResultStatuses.TIMEOUT) {
     process.stderr.write(
-      `${chalk.red(`A timeout occurred while running automated test batch, please try again.\nView detailed results: ${batchUrl}`)}`,
+      `${chalk.red(
+        `A timeout occurred while running automated test batch, please try again.\nView detailed results: ${batchUrl}`,
+      )}`,
     );
     return;
   }
