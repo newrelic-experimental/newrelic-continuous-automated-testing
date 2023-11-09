@@ -48,7 +48,7 @@ The command has the following options:
         "config": {                         // All config fields optional
           "isBlocking": true,
           "overrides":{
-              "startingUrl": "staging-url-override.com"
+              "startingUrl": "example.com"
           }
         }
       },
