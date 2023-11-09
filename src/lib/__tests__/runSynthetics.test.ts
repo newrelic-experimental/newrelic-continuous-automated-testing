@@ -58,6 +58,17 @@ describe("The runSynthetics function", () => {
     expect(startAutomatedTestsSpy).toBeCalledTimes(6);
   });
 
+  it("should catch and log an error that was thrown when no batch id was returned", async () => {
+    const startAutomatedTestsSpy = jest.spyOn(
+      NerdGraphService.prototype,
+      "startAutomatedTests",
+    );
+    startAutomatedTestsSpy.mockResolvedValue("");
+    const runSyntheticsPromise = runTestBatch(apiKey, mockConfig);
+    jest.runAllTimersAsync();
+    await expect(runSyntheticsPromise).rejects.toThrow();
+  });
+
   it("should start the tests, then return the results when result is PASSED", async () => {
     const startAutomatedTestsSpy = jest.spyOn(
       NerdGraphService.prototype,

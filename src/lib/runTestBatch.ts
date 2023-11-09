@@ -1,5 +1,6 @@
 import NerdGraphService from "../services/nerdgraph/nerdGraphService";
 import {
+  ContinuousAutomatedTestingResults,
   ContinuousTestingConfiguration,
   SyntheticsAutomatedTestConfig,
   TestResult,
@@ -66,7 +67,15 @@ export async function runTestBatch(
 
     await outputResults(batchId, batchUrl, testResults, verboseLogging);
 
-    return testResults;
+    const continuousAutomatedTestingResults: ContinuousAutomatedTestingResults =
+      {
+        batchId: batchId,
+        batchUrl: batchUrl,
+        status: testResults.status,
+        tests: testResults.tests,
+      };
+
+    return continuousAutomatedTestingResults;
   } catch (error) {
     let errorMessage = "";
     if (error instanceof Error) {

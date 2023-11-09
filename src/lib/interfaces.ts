@@ -48,6 +48,13 @@ export interface SyntheticsSecureCredentialOverrideInput {
   overrideKey: string;
 }
 
+export interface ContinuousAutomatedTestingResults {
+  batchId: string;
+  batchUrl: string;
+  status: string;
+  tests: AutomatedTest[];
+}
+
 export interface TestResult {
   status: string;
   tests: AutomatedTest[];
