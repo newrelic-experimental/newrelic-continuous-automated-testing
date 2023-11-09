@@ -32,6 +32,21 @@ describe("The runSynthetics function", () => {
     tests: [
       {
         monitorGUID: "monitor-guid-123",
+        config: {
+          overrides: {
+            domain: [
+              {
+                domain: "http://example.com",
+                override: "https://newrelic.com",
+              },
+            ],
+            location: "AWS_US_EAST_1",
+            secureCredential: [
+              { key: "targetKey", overrideKey: "overriddenKey" },
+            ],
+            startingUrl: "example.com",
+          },
+        },
       },
     ],
     config: mockConfigInput,
@@ -100,6 +115,21 @@ describe("The runSynthetics function", () => {
         mockBatchId,
       ),
     );
+    expect(
+      result?.tests.at(0)?.automatedTestMonitorConfig?.overrides?.domain,
+    ).toEqual([
+      { domain: "http://example.com", override: "https://newrelic.com" },
+    ]);
+    expect(
+      result?.tests.at(0)?.automatedTestMonitorConfig?.overrides?.location,
+    ).toBe("AWS_US_EAST_1");
+    expect(
+      result?.tests.at(0)?.automatedTestMonitorConfig?.overrides
+        ?.secureCredential,
+    ).toEqual([{ key: "targetKey", overrideKey: "overriddenKey" }]);
+    expect(
+      result?.tests.at(0)?.automatedTestMonitorConfig?.overrides?.startingUrl,
+    ).toBe("example.com");
   });
 
   it("should start the tests, then return the results when result is FAILURE", async () => {
@@ -231,6 +261,16 @@ const mockTestResultsPassed: TestResult = {
       resultsUrl: "www.newrelic.com",
       automatedTestMonitorConfig: {
         isBlocking: false,
+        overrides: {
+          domain: [
+            { domain: "http://example.com", override: "https://newrelic.com" },
+          ],
+          location: "AWS_US_EAST_1",
+          secureCredential: [
+            { key: "targetKey", overrideKey: "overriddenKey" },
+          ],
+          startingUrl: "example.com",
+        },
       },
     },
   ],

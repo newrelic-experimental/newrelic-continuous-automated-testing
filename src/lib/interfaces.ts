@@ -72,7 +72,24 @@ export interface AutomatedTest {
 
 export interface AutomatedTestMonitorConfig {
   isBlocking?: boolean;
-  overrides?: null;
+  overrides?: AutomatedTestMonitorConfigOverrides;
+}
+
+export interface AutomatedTestMonitorConfigOverrides {
+  domain?: DomainOverride[];
+  location?: string;
+  secureCredential?: SecureCredentialOverride[];
+  startingUrl?: string;
+}
+
+export interface DomainOverride {
+  domain?: string;
+  override?: string;
+}
+
+export interface SecureCredentialOverride {
+  key?: string;
+  overrideKey?: string;
 }
 
 export enum TestResultStatuses {
