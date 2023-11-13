@@ -53,7 +53,7 @@ export async function runTestBatch(
       `Waiting for test results of batch: ${batchId}`,
     ).start();
 
-    await wait(25000);
+    await wait(40000);
 
     const testResults: TestResult =
       await nerdGraphService.pollAutomatedTestResults(
