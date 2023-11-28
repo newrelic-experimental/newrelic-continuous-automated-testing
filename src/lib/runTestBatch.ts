@@ -55,11 +55,19 @@ export async function runTestBatch(
 
     await wait(40000);
 
-    const testResults: TestResult =
-      await nerdGraphService.pollAutomatedTestResults(
-        config.accountId,
-        batchId,
-      );
+    const testResults: TestResult = await retry(
+      async () => {
+        return await nerdGraphService.pollAutomatedTestResults(
+          config.accountId,
+          batchId,
+        );
+      },
+      {
+        retries: 5,
+        minTimeout: 5000,
+        maxTimeout: 5000,
+      },
+    );
 
     waitingForResultsSpinner.succeed();
 

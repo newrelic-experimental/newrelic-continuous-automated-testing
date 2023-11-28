@@ -49,7 +49,6 @@ export async function outputResults(
     countFailure,
     countBlockingFailure,
   );
-  writeLine(summaryString);
 
   printableResults.forEach((resultString) => {
     writeLine(resultString);
