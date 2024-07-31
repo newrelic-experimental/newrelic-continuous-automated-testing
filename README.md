@@ -1,3 +1,5 @@
+[![New Relic Experimental header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/Experimental.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#category-new-relic-experimental)
+
 # continuous-automated-testing-ci
 CLI and library that adds Synthetics Continuous Automated Testing directly into your CICD pipeline!
 
@@ -62,3 +64,15 @@ The command has the following options:
   }
   
 ```
+
+
+## Support
+
+New Relic hosts and moderates an online forum where customers can interact with New Relic employees as well as other customers to get help and share best practices. 
+
+https://forum.newrelic.com/s/
+
+## License
+New Relic Continuous Automated Testing CLI is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License.
+
+The New Relic Continuous Automated Testing CLI also uses source code from third-party libraries. You can find full details on which libraries are used and the terms under which they are licensed in the [third-party notices document](https://github.com/newrelic-experimental/newrelic-continuous-automated-testing/blob/main/THIRD_PARTY_NOTICES.md).
